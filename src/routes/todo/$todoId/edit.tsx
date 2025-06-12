@@ -1,9 +1,7 @@
-import { TodoList } from '@/pages';
-
 export const Route = createFileRoute({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  return <TodoList />;
+  return <div>Hello "/todo/$todoId/edit"!</div>
 }
