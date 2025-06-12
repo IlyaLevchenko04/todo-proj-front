@@ -15,6 +15,7 @@ import { Route as R500RouteImport } from './routes/500'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TodoIndexRouteImport } from './routes/todo/index'
+import { Route as TodoCreateRouteImport } from './routes/todo/create'
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as TodoTodoIdIndexRouteImport } from './routes/todo/$todoId/index'
@@ -38,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
 const TodoIndexRoute = TodoIndexRouteImport.update({
   id: '/todo/',
   path: '/todo/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TodoCreateRoute = TodoCreateRouteImport.update({
+  id: '/todo/create',
+  path: '/todo/create',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
@@ -67,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/500': typeof R500Route
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/todo/create': typeof TodoCreateRoute
   '/todo': typeof TodoIndexRoute
   '/todo/$todoId/edit': typeof TodoTodoIdEditRoute
   '/todo/$todoId': typeof TodoTodoIdIndexRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/500': typeof R500Route
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/todo/create': typeof TodoCreateRoute
   '/todo': typeof TodoIndexRoute
   '/todo/$todoId/edit': typeof TodoTodoIdEditRoute
   '/todo/$todoId': typeof TodoTodoIdIndexRoute
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/500': typeof R500Route
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/todo/create': typeof TodoCreateRoute
   '/todo/': typeof TodoIndexRoute
   '/todo/$todoId/edit': typeof TodoTodoIdEditRoute
   '/todo/$todoId/': typeof TodoTodoIdIndexRoute
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/500'
     | '/auth/login'
     | '/auth/register'
+    | '/todo/create'
     | '/todo'
     | '/todo/$todoId/edit'
     | '/todo/$todoId'
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
     | '/500'
     | '/auth/login'
     | '/auth/register'
+    | '/todo/create'
     | '/todo'
     | '/todo/$todoId/edit'
     | '/todo/$todoId'
@@ -120,6 +131,7 @@ export interface FileRouteTypes {
     | '/500'
     | '/auth/login'
     | '/auth/register'
+    | '/todo/create'
     | '/todo/'
     | '/todo/$todoId/edit'
     | '/todo/$todoId/'
@@ -131,6 +143,7 @@ export interface RootRouteChildren {
   R500Route: typeof R500Route
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
+  TodoCreateRoute: typeof TodoCreateRoute
   TodoIndexRoute: typeof TodoIndexRoute
   TodoTodoIdEditRoute: typeof TodoTodoIdEditRoute
   TodoTodoIdIndexRoute: typeof TodoTodoIdIndexRoute
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       path: '/auth/register'
       fullPath: '/auth/register'
       preLoaderRoute: typeof AuthRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/todo/create': {
+      id: '/todo/create'
+      path: '/todo/create'
+      fullPath: '/todo/create'
+      preLoaderRoute: typeof TodoCreateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/todo/': {
@@ -242,6 +262,15 @@ declare module './routes/auth/register' {
     FileRoutesByPath['/auth/register']['fullPath']
   >
 }
+declare module './routes/todo/create' {
+  const createFileRoute: CreateFileRoute<
+    '/todo/create',
+    FileRoutesByPath['/todo/create']['parentRoute'],
+    FileRoutesByPath['/todo/create']['id'],
+    FileRoutesByPath['/todo/create']['path'],
+    FileRoutesByPath['/todo/create']['fullPath']
+  >
+}
 declare module './routes/todo/index' {
   const createFileRoute: CreateFileRoute<
     '/todo/',
@@ -276,6 +305,7 @@ const rootRouteChildren: RootRouteChildren = {
   R500Route: R500Route,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
+  TodoCreateRoute: TodoCreateRoute,
   TodoIndexRoute: TodoIndexRoute,
   TodoTodoIdEditRoute: TodoTodoIdEditRoute,
   TodoTodoIdIndexRoute: TodoTodoIdIndexRoute,
