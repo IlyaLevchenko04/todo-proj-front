@@ -1,7 +1,9 @@
+import { RegisterForm } from '@/pages';
+
 export const Route = createFileRoute({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/auth/register"!</div>
+  return <RegisterForm />;
 }
